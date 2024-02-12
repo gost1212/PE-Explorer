@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
-            "args": ["C:\\Users\\Saad_\\Documents\\C\\PE-Explorer\\a.exe"],
+            "args": ["-i", "C:\\Windows\\System32\\cmd.exe"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
