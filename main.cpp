@@ -528,7 +528,7 @@ int ParseImage64(PIMAGE_DOS_HEADER pImageDOSHeader)
 
     printf("\n[+] NT HEADER\n");
     printf("\tSignature : 0x%X\n", (uintptr_t)pImageNTHeader64->Signature);
-
+    
     printf("\n[+] FILE HEADER\n");
     printf("\tMachine : 0x%X\n", (uintptr_t)ImageFileHeader.Machine);
     printf("\tNumberOfSections : 0x%X\n", (uintptr_t)ImageFileHeader.NumberOfSections);

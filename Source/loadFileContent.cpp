@@ -1,7 +1,4 @@
-#include <windows.h>
-#include <winternl.h>
-#include <cstdio>
-#include <strsafe.h>
+#include "includes.hpp"
 /// @brief This function takes in {char*} that has the target file path and returns Heap HANDLE with the file data.
 /// @param char*_filePath file path in {char*}
 /// @return HANDLE: Returns an address in memory that holds the file content.

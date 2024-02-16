@@ -1,5 +1,8 @@
-#include <getopt.h>
+#include "includes.hpp"
+#include "flags.hpp"
 #include "loadFileContent.cpp"
+#include "parse32bit.cpp"
+#include "parse64bit.cpp"
 
 const char* helpMessage =
 "-e   Print exported functions only\n"
@@ -7,6 +10,7 @@ const char* helpMessage =
 "-l   Print imported libraries only\n";
 
 HANDLE GetFileContent(const char* lpFilePath);
+int ParseImage64(PIMAGE_DOS_HEADER pImageDOSHeader, uint16_t flags);
 
 static struct option long_options[] = {
     {"exported-functions", no_argument, 0, 0},
@@ -27,6 +31,7 @@ int main(const int argc, char* argv[]){
         printf("Please pass some arguments\n");
         return -1;
     }
+    uint16_t flags = 0x80;
     bool b_printAll = true;
     bool b_importedFunctions = false;
     bool b_importedLibraries = false;
@@ -96,7 +101,7 @@ int main(const int argc, char* argv[]){
     }
     printf("Parsed DOS header succesfully.\n");
 
-    const PIMAGE_NT_HEADERS pImageNTHeaders = (PIMAGE_NT_HEADERS) ((DWORD_PTR) pImageDOSHeader + pImageDOSHeader->e_lfanew);//convert
+    const PIMAGE_NT_HEADERS pImageNTHeaders = (PIMAGE_NT_HEADERS) ((DWORD_PTR) pImageDOSHeader + pImageDOSHeader->e_lfanew);//convert NT header from DOS header
     if (pImageNTHeaders == nullptr){
         if (hFileContent != nullptr){
             HeapFree(hFileContent, 0, nullptr);
@@ -111,7 +116,7 @@ int main(const int argc, char* argv[]){
     if(magicNumber == IMAGE_NT_OPTIONAL_HDR32_MAGIC){
 
     }else if(magicNumber == IMAGE_NT_OPTIONAL_HDR64_MAGIC){
-
+        ParseImage64(pImageDOSHeader, flags);
     }else{
         printf("Invalid magic number\n");
         return -1;
